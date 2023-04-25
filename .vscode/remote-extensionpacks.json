@@ -1,0 +1,46 @@
+{
+    "extensionPacks": [
+        {
+            "extensionPackId": "ms-python.python",
+            "extensionIds": [
+                "ms-python.python"
+            ]
+        },
+        {
+            "extensionPackId": "ms-vscode-remote.remote-containers",
+            "extensionIds": [
+                "ms-vscode-remote.remote-containers"
+            ]
+        },
+        {
+            "extensionPackId": "ms-python.vscode-pylance",
+            "extensionIds": [
+                "ms-python.vscode-pylance"
+            ]
+        },
+        {
+            "extensionPackId": "ms-python.black-formatter",
+            "extensionIds": [
+                "ms-python.black-formatter"
+            ]
+        },
+        {
+            "extensionPackId": "ms-python.flake8",
+            "extensionIds": [
+                "ms-python.flake8"
+            ]
+        },
+        {
+            "extensionPackId": "ms-azuretools.vscode-docker",
+            "extensionIds": [
+                "ms-azuretools.vscode-docker"
+            ]
+        },
+        {
+            "extensionPackId": "matangover.mypy",
+            "extensionIds": [
+                "matangover.mypy"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/__pycache__": true,
+    "**/.mypy_cache": true,
+    "**/*.pyc": true,
+    "**/*.pyo": true,
+    "**/*.pyd": true,
+    "**/*.so": true,
+    "**/*.dylib": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/node_modules": true,
+    "**/jspm_packages": true,
+    "**/bower_components": true,
+    "**/*.egg-info": true,
+    "**/*.egg": true,
+    "**/.tox": true,
+    "**/.venv": true
+  }
+}
