@@ -6,3 +6,4 @@ fastapi-users[all]
 celery[redis]
 sqlalchemy
 databases[postgresql]
+python-dotenv

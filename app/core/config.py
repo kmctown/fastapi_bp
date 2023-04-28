@@ -1,16 +1,25 @@
 import secrets
-
-from pydantic import AnyHttpUrl, BaseSettings, EmailStr, HttpUrl, PostgresDsn, validator
 from typing import Any
+
+from dotenv import load_dotenv
+from pydantic import (
+    AnyHttpUrl,
+    BaseSettings,
+    EmailStr,
+    HttpUrl,
+    PostgresDsn,
+    validator,
+)
+
+load_dotenv()
 
 
 class Settings(BaseSettings):
+    PROJECT_NAME: str = "App API"
     API_V1_STR: str = "/api/v1"
     SECRET_KEY: str = secrets.token_urlsafe(32)
     # 60 minutes * 24 hours * 8 days = 8 days
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
-    SERVER_NAME: str
-    SERVER_HOST: AnyHttpUrl
     # BACKEND_CORS_ORIGINS is a JSON-formatted list of origins
     # e.g: '["http://localhost", "http://localhost:4200", "http://localhost:3000", \
     # "http://localhost:8080", "http://local.dockertoolbox.tiangolo.com"]'
@@ -23,15 +32,6 @@ class Settings(BaseSettings):
         elif isinstance(v, (list, str)):
             return v
         raise ValueError(v)
-
-    PROJECT_NAME: str = "App API"
-    SENTRY_DSN: HttpUrl | None = None
-
-    @validator("SENTRY_DSN", pre=True)
-    def sentry_dsn_can_be_blank(cls, v: str) -> str | None:
-        if len(v) == 0:
-            return None
-        return v
 
     POSTGRES_SERVER: str
     POSTGRES_USER: str
@@ -51,11 +51,16 @@ class Settings(BaseSettings):
             path=f"/{values.get('POSTGRES_DB') or ''}",
         )
 
-    SMTP_TLS: bool = True
-    SMTP_PORT: int | None = None
-    SMTP_HOST: str | None = None
-    SMTP_USER: str | None = None
-    SMTP_PASSWORD: str | None = None
+    REDIS_URL: str
+
+    SENTRY_DSN: HttpUrl | None = None
+
+    @validator("SENTRY_DSN", pre=True)
+    def sentry_dsn_can_be_blank(cls, v: str) -> str | None:
+        if len(v) == 0:
+            return None
+        return v
+
     EMAILS_FROM_EMAIL: EmailStr | None = None
     EMAILS_FROM_NAME: str | None = None
 
@@ -71,19 +76,14 @@ class Settings(BaseSettings):
 
     @validator("EMAILS_ENABLED", pre=True)
     def get_emails_enabled(cls, v: bool, values: dict[str, Any]) -> bool:
-        return bool(
-            values.get("SMTP_HOST")
-            and values.get("SMTP_PORT")
-            and values.get("EMAILS_FROM_EMAIL")
-        )
+        # Make sure email is configured properly if enabled
+        return False
 
-    EMAIL_TEST_USER: EmailStr = "test@example.com"  # type: ignore
-    FIRST_SUPERUSER: EmailStr
-    FIRST_SUPERUSER_PASSWORD: str
     USERS_OPEN_REGISTRATION: bool = False
 
     class Config:
         case_sensitive = True
+        env_file = ".env"
 
 
 settings = Settings()
