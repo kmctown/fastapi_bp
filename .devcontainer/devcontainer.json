@@ -1,8 +1,8 @@
 {
-  "name": "App",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "app_devcontainer",
-  "workspaceFolder": "/workspace",
+  "name": "Devcontainer",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "web",
+  "workspaceFolder": "/app",
   "features": {
     "ghcr.io/devcontainers-contrib/features/black:1": {},
     "ghcr.io/devcontainers-contrib/features/flake8:2": {},
@@ -31,7 +31,12 @@
       },
       "extensions": [
         "ms-python.python",
-        "ms-python.vscode-pylance"
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "ms-python.flake8",
+        "ms-python.isort",
+        "ms-azuretools.vscode-docker",
+        "GitHub.vscode-github-actions"
       ],
       "remoteUser": "vscode"
     }

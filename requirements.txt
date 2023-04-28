@@ -1,8 +1,20 @@
+# TODO: Pin these to versions
+# TODO: Split up base/dev/prod 
 fastapi
 uvicorn
 asyncpg
 aioredis
 fastapi-users[all]
 celery[redis]
-sqlalchemy
-databases[postgresql]
+sqlalchemy==2.0.12
+sqlalchemy-stubs
+alembic
+# Development/CI
+flake8==6.0.0
+isort==5.12.0
+psycopg2-binary
+python-dotenv
+pytest==7.3.1
+pytest-asyncio==0.21.0
+httpx
+sqlalchemy-utils==0.41.1
