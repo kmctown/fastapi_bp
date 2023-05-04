@@ -1,9 +1,17 @@
+# TODO: Pin these to versions
+# TODO: Split up base/dev/prod 
 fastapi
 uvicorn
 asyncpg
 aioredis
 fastapi-users[all]
 celery[redis]
-sqlalchemy
-databases[postgresql]
+sqlalchemy==2.0.12
+sqlalchemy-stubs
+alembic
+# Development
 python-dotenv
+pytest
+pytest-asyncio==0.15.1
+pytest-postgresql
+httpx
