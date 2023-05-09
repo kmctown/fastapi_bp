@@ -8,8 +8,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from app.auth import models  # noqa
-from app.core.config import settings
-from app.database.core import Base
+from app.database.core import Base, get_database_url
 from app.logging import logging
 
 load_dotenv()
@@ -23,7 +22,7 @@ config = context.config
 log.info("Running migrations...")
 log.info("Connecting to database...")
 
-config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
+config.set_main_option("sqlalchemy.url", get_database_url())
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

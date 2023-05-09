@@ -7,12 +7,18 @@ well as a `Base` object for defining database models using SQLAlchemy.
 """
 
 from typing import AsyncGenerator
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import declarative_base  # type: ignore[attr-defined]
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from app.core.config import settings
 
 
-engine = create_async_engine(settings.DATABASE_URL, echo=True)
+def get_database_url() -> str:
+    if settings.TESTING:
+        return settings.DATABASE_URL.replace("app_db", "test_app_db")
+    return settings.DATABASE_URL
+
+
+engine = create_async_engine(get_database_url(), echo=True)
 async_session = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 Base = declarative_base()

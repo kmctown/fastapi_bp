@@ -1,3 +1,4 @@
+import sys
 import secrets
 from typing import Any
 
@@ -33,7 +34,10 @@ class Settings(BaseSettings):
             return v
         raise ValueError(v)
 
+    TESTING: bool = "pytest" in sys.modules
+
     DATABASE_URL: str
+
     REDIS_URL: str
 
     SENTRY_DSN: HttpUrl | None = None
