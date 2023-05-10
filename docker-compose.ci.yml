@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  web:
+    extends:
+      file: docker-compose.yml
+      service: app
+    environment:
+      - ENV_VAR=value
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: app_db
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: app_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6.2
+
+  celery_worker:
+    build: .
+    command: celery -A app.core.celery_app worker --pool=solo -l info
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+
+volumes:
+  pgdata:
