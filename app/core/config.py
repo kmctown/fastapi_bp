@@ -11,8 +11,11 @@ from pydantic import (
     validator,
 )
 
+settings_args: dict = {}
+
 try:
     load_dotenv()
+    settings_args["_env_file"] = ".env"
 except FileNotFoundError:
     pass
 
@@ -73,7 +76,6 @@ class Settings(BaseSettings):
 
     class Config:
         case_sensitive = True
-        env_file = ".env"
 
 
-settings = Settings()
+settings = Settings(*settings_args)
