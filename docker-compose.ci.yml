@@ -4,34 +4,31 @@ services:
   web:
     extends:
       file: docker-compose.yml
-      service: app
+      service: web
     environment:
-      - ENV_VAR=value
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: ${REDIS_URL}
 
   db:
-    image: postgres:13
-    environment:
-      POSTGRES_DB: app_db
-      POSTGRES_USER: app_user
-      POSTGRES_PASSWORD: app_password
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+    extends:
+      file: docker-compose.yml
+      service: web
 
   redis:
     image: redis:6.2
 
   celery_worker:
-    build: .
-    command: celery -A app.core.celery_app worker --pool=solo -l info
-    depends_on:
-      - db
-      - redis
-    volumes:
-      - .:/app
-    env_file:
-      - .env
+    extends:
+      file: docker-compose.yml
+      service: web
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: ${REDIS_URL}
 
 volumes:
   pgdata:
+
+
+variables:
+  DATABASE_URL: postgresql+asyncpg://app_user:app_password@db:5432/app_db
+  REDIS_URL: redis://redis:6379/0
