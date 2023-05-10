@@ -11,7 +11,10 @@ from pydantic import (
     validator,
 )
 
-load_dotenv()
+try:
+    load_dotenv()
+except FileNotFoundError:
+    pass
 
 
 class Settings(BaseSettings):

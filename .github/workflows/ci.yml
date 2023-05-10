@@ -6,6 +6,7 @@ env:
   COMPOSE_DOCKER_CLI_BUILD: 1
   USE_DOCKER: yes
   REDIS_URL: redis://redis:6379/0
+  DATABASE_URL: postgresql+asyncpg://app_user:app_password@db:5432/app_db
 
 on:
   pull_request:
