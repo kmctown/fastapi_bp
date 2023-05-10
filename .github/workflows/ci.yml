@@ -1,0 +1,71 @@
+name: CI
+
+# Enable Buildkit and let compose use it to speed up image building
+env:
+  DOCKER_BUILDKIT: 1
+  COMPOSE_DOCKER_CLI_BUILD: 1
+  USE_DOCKER: yes
+  REDIS_URL: redis://redis:6379/0
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    paths-ignore: [ "docs/**" ]
+
+  push:
+    branches: [ "main" ]
+    paths-ignore: [ "docs/**" ]
+
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install black flake8 isort PyYAML
+        
+      - name: Run Black
+        run: black . --check
+    
+      - name: Run Flake8
+        run: flake8
+  
+      - name: Run Isort
+        run: isort . --check-only --diff
+  
+      - name: Check YAML files
+        run: find . -name "*.yaml" -exec yaml-lint {} \;
+
+  pytest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v3
+
+      - name: Build the Stack
+        run:  docker compose -f docker-compose.yml build
+
+      - name: Run DB Migrations
+        run:  docker compose -f docker-compose.yml run --rm alembic upgrade head
+
+      - name: Run Django Tests
+        run:  docker compose -f docker-compose.ci.yml run pytest
+        
+      - name: Tear down the Stack
+        run:  docker compose -f docker-compose.ci.yml down
