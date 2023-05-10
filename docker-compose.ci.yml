@@ -6,8 +6,8 @@ services:
       file: docker-compose.yml
       service: web
     environment:
-      DATABASE_URL: ${DATABASE_URL}
-      REDIS_URL: ${REDIS_URL}
+      - DATABASE_URL
+      - REDIS_URL
 
   db:
     extends:
@@ -22,13 +22,8 @@ services:
       file: docker-compose.yml
       service: web
     environment:
-      DATABASE_URL: ${DATABASE_URL}
-      REDIS_URL: ${REDIS_URL}
+      - DATABASE_URL
+      - REDIS_URL
 
 volumes:
   pgdata:
-
-
-variables:
-  DATABASE_URL: postgresql+asyncpg://app_user:app_password@db:5432/app_db
-  REDIS_URL: redis://redis:6379/0
