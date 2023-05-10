@@ -8,6 +8,8 @@ services:
     environment:
       - DATABASE_URL
       - REDIS_URL
+    env_file:
+      - # empty to clear out the env_file from the parent
 
   db:
     extends:
@@ -24,6 +26,8 @@ services:
     environment:
       - DATABASE_URL
       - REDIS_URL
+    env_file:
+      - # empty to clear out the env_file from the parent
 
 volumes:
   pgdata:
