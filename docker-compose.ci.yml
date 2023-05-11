@@ -2,32 +2,47 @@ version: "3.9"
 
 services:
   web:
-    extends:
-      file: docker-compose.yml
-      service: web
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app
     environment:
-      - DATABASE_URL
+      - POSTGRES_HOST
+      - POSTGRES_DB
+      - POSTGRES_USER
       - REDIS_URL
-    unset:
-      - env_file
 
   db:
-    extends:
-      file: docker-compose.yml
-      service: web
+    image: postgres:13
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   redis:
     image: redis:6.2
 
   celery_worker:
-    extends:
-      file: docker-compose.yml
-      service: web
+    build: .
+    command: celery -A app.core.celery_app worker --pool=solo -l info
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app
     environment:
-      - DATABASE_URL
+      - POSTGRES_HOST
+      - POSTGRES_DB
+      - POSTGRES_USER
       - REDIS_URL
-    unset:
-      - env_file
 
 volumes:
   pgdata:
