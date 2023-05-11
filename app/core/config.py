@@ -1,15 +1,9 @@
-import sys
 import secrets
+import sys
 from typing import Any
 
 from dotenv import load_dotenv
-from pydantic import (
-    AnyHttpUrl,
-    BaseSettings,
-    EmailStr,
-    HttpUrl,
-    validator,
-)
+from pydantic import AnyHttpUrl, BaseSettings, EmailStr, HttpUrl, validator
 
 settings_args: dict = {}
 

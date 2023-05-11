@@ -4,10 +4,9 @@ from typing import AsyncGenerator, Generator
 
 import pytest
 import pytest_asyncio
-from httpx import AsyncClient
-
-from alembic.config import Config
 from alembic.command import upgrade
+from alembic.config import Config
+from httpx import AsyncClient
 from sqlalchemy import create_engine
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy_utils import create_database, database_exists, drop_database

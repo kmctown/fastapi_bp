@@ -1,4 +1,5 @@
 from celery import Celery
+
 from app.core.config import settings
 
 # Initialize Celery with a Redis broker and JSON serializer

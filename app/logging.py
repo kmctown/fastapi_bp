@@ -1,8 +1,7 @@
 import logging
 
-from app.enums import StrEnum
 from app.core.config import settings
-
+from app.enums import StrEnum
 
 LOG_FORMAT_DEBUG = "%(levelname)s:%(message)s:%(pathname)s:%(funcName)s:%(lineno)d"
 
