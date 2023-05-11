@@ -65,10 +65,10 @@ jobs:
         run:  docker compose -f docker-compose.ci.yml up -d --build
 
       - name: Run migrations
-        run:  alembic upgrade head
+        run:  docker compose exec web alembic upgrade head
 
       - name: Run tests
-        run:  pytest
+        run:  docker compose exec web pytest
         
       - name: Tear down the stack
         run:  docker compose -f docker-compose.ci.yml down
