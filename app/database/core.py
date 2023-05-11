@@ -13,14 +13,7 @@ from sqlalchemy.orm import declarative_base  # type: ignore[attr-defined]
 
 from app.core.config import settings
 
-
-def get_database_url() -> str:
-    if settings.TESTING:
-        return settings.DATABASE_URL.replace("app_db", "test_app_db")
-    return settings.DATABASE_URL
-
-
-engine = create_async_engine(get_database_url(), echo=True)
+engine = create_async_engine(settings.DATABASE_URL, echo=True)
 async_session = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 Base = declarative_base()

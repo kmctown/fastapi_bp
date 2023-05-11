@@ -11,7 +11,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy_utils import create_database, database_exists, drop_database
 
-from app.database.core import Base, get_database_url
+from app.core.config import settings
+from app.database.core import Base
 from app.main import app
 
 
@@ -31,7 +32,7 @@ async def client() -> AsyncGenerator[AsyncClient, None]:
 @pytest_asyncio.fixture(scope="session", autouse=True)
 def test_db() -> Generator:
     # Change the database URL to use the test database
-    test_db_url = get_database_url()
+    test_db_url = settings.DATABASE_URL
 
     # Replace 'postgresql+asyncpg' with 'postgresql' to use the
     # synchronous psycopg dialect
@@ -56,7 +57,7 @@ def test_db() -> Generator:
 @pytest_asyncio.fixture(autouse=True)
 async def clear_tables(test_db: AsyncGenerator) -> AsyncGenerator:
     """Clear tables between each test"""
-    async_engine = create_async_engine(get_database_url())
+    async_engine = create_async_engine(settings.DATABASE_URL)
 
     async with async_engine.begin() as conn:
         for table in reversed(Base.metadata.sorted_tables):
