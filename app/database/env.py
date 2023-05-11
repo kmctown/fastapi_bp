@@ -1,8 +1,8 @@
 import asyncio
+
 from logging.config import fileConfig
 
 from alembic import context
-from dotenv import load_dotenv
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
@@ -12,13 +12,6 @@ from app.database.core import Base, get_database_url
 from app.logging import logging
 
 log = logging.getLogger(__name__)
-
-try:
-    log.info("Loading env for migrations")
-    load_dotenv()
-except FileNotFoundError:
-    log.info(".env not found, using os environment only")
-    pass
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
