@@ -57,12 +57,6 @@ class Settings(BaseSettings):
 
     SENTRY_DSN: HttpUrl | None = None
 
-    @validator("SENTRY_DSN", pre=True)
-    def sentry_dsn_can_be_blank(cls, v: str) -> str | None:
-        if len(v) == 0:
-            return None
-        return v
-
     EMAILS_FROM_EMAIL: EmailStr | None = None
     EMAILS_FROM_NAME: str | None = None
 
