@@ -1,7 +1,7 @@
 """Add user model
 
 Revision ID: 452764cdfc31
-Revises: 
+Revises:
 Create Date: 2023-05-03 01:12:31.770059
 
 """
