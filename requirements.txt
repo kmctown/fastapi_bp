@@ -9,7 +9,8 @@ celery[redis]
 sqlalchemy==2.0.12
 sqlalchemy-stubs
 alembic
-# Development
+# Development/CI
+flake8==6.0.0
 psycopg2-binary
 python-dotenv
 pytest==7.3.1
