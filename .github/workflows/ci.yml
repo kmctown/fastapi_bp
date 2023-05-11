@@ -64,9 +64,6 @@ jobs:
       - name: Bring up the stack
         run:  docker compose -f docker-compose.ci.yml up -d
 
-      - name: Create empty .env file
-        run:  touch .env
-
       - name: Run migrations
         run:  docker compose exec web alembic upgrade head
 

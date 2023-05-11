@@ -11,7 +11,11 @@ from app.auth import models  # noqa
 from app.database.core import Base, get_database_url
 from app.logging import logging
 
-load_dotenv()
+
+try:
+    load_dotenv()
+except FileNotFoundError:
+    pass
 
 log = logging.getLogger(__name__)
 
