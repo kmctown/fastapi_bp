@@ -11,13 +11,14 @@ from app.auth import models  # noqa
 from app.database.core import Base, get_database_url
 from app.logging import logging
 
+log = logging.getLogger(__name__)
 
 try:
+    log.info("Loading env for migrations")
     load_dotenv()
 except FileNotFoundError:
+    log.info(".env not found, using os environment only")
     pass
-
-log = logging.getLogger(__name__)
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
