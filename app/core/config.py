@@ -10,7 +10,7 @@ settings_args: dict = {}
 try:
     load_dotenv()
     settings_args["_env_file"] = ".env"
-except Exception:
+except FileNotFoundError:
     pass
 
 
